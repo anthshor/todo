@@ -19,7 +19,7 @@ todolist << Todo.new("Goto Bank","B")
 todolist << Todo.new("Pay bills","B")
 todolist << Todo.new("Watch TV","B")
 
-class Todolist < Struct.new(:todoitems)
+class Todolist 
 
     def initialize
     	self.todoitems = []
