@@ -101,7 +101,7 @@ case param
   when 'complete'
     opt = ARGV.shift.to_i
     progressTodo(a,"P", opt)
-    when '-ready'
+  when '-ready'
     opt = ARGV.shift.to_i
     putBackTodo(a,"R", opt)
   when '-progress'
