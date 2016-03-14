@@ -2,6 +2,19 @@
 a = []
 i = 0
 
+if ! File.exists?('todos.txt') then
+    f = File.open("todos.txt", "w")
+    f.write('B|')
+    f.write("\n")
+    f.write('R|')
+    f.write("\n")
+    f.write('P|')
+    f.write("\n")
+    f.write('C|')
+    f.write("\n")
+    f.close()
+end
+
 File.open("todos.txt", "r").each_line do |line|
   line = line.chomp
   data = line.split('|')

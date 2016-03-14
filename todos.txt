@@ -1,4 +1,4 @@
-B|Goto Bank|
-R|Watch TV|
-P|Learn Ruby|
+B|Goto Bank|Watch TV|Learn Ruby|
+R|
+P|
 C|
