@@ -1,5 +1,27 @@
 # todo
 
+Command line script to manage todos
+
+Backlog <-> ready <-> in progress <-> complete
+
+```
+./todos.rb add <todo item>
+./todos.rb <command> <list>
+
+<command>
+list | ready | progress | complete
+
+<list>
+B | R | P | C
+
+B = backlog
+R = ready
+P = in progress
+C = complete
+```
+
+Example run
+```
 Anthonys-Mac-mini:todo $ ./todos.rb list B
 Backlog
 -------
@@ -79,4 +101,4 @@ Anthonys-Mac-mini:todo $ ./todos.rb list C
 Complete
 --------
 1) Go Swimming
-
+```
