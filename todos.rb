@@ -79,18 +79,22 @@ def progressTodo(a,whichList, whichTodo)
   for i in 0..a.length - 1 do
     if a[i][0] == whichList then y = i end
   end
-  a[y+1].push(a[y][whichTodo])
-  a[y].delete_at(whichTodo)
-  saveit(a)
+  unless a[y][whichTodo].nil? then
+    a[y+1].push(a[y][whichTodo])
+    a[y].delete_at(whichTodo)
+    saveit(a)
+  end
 end  
 
 def putBackTodo(a,whichList, whichTodo)
   for i in 0..a.length - 1 do
     if a[i][0] == whichList then y = i end
   end
-  a[y-1].push(a[y][whichTodo])
-  a[y].delete_at(whichTodo)
-  saveit(a)
+  unless a[y][whichTodo].nil? then
+    a[y-1].push(a[y][whichTodo])
+    a[y].delete_at(whichTodo)
+    saveit(a)
+  end
 end  
 #addTodo(a,"Eat cake")
 #moveTodo
