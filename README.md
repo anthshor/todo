@@ -6,10 +6,10 @@ Backlog <-> ready <-> in progress <-> complete
 
 ```
 ./todos.rb add <todo item>
-./todos.rb <command> <list>
+./todos.rb <move command> <list>
 
-<command>
-list | ready | progress | complete
+<move command>
+list | ready | progress | complete | -ready | -progress | -complete
 
 <list>
 B | R | P | C
