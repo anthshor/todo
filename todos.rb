@@ -6,8 +6,15 @@
 			:   - adds todos 
 			:   - moves todo items between 'backlog', 'ready', 'in progress', 'complete' 
 			:   - save todo list to a file
+			:   - can trash a todo from backlog 
   @guaranteed outcome   : command line program to meet requirements
 
+=end
+
+=begin
+  @pre 
+  @post todo file initialized
+  @invariants list headers [B,R,P,C,T]
 =end
 
 a = []
@@ -15,6 +22,8 @@ i = 0
 
 if ! File.exists?('todos.txt') then
     f = File.open("todos.txt", "w")
+    f.write('T|')
+    f.write("\n")
     f.write('B|')
     f.write("\n")
     f.write('R|')
@@ -23,7 +32,7 @@ if ! File.exists?('todos.txt') then
     f.write("\n")
     f.write('C|')
     f.write("\n")
-    f.close()
+  f.close()
 end
 
 File.open("todos.txt", "r").each_line do |line|
@@ -37,7 +46,7 @@ def listTodo (a,whatlist)
 =begin
   @pre 		: todo array, list identifier
   @post 	: print selected list
-  @invariants 	: list idenitifier in (B,R,P,C) otherwise print undefined
+  @invariants 	: list idenitifier in (B,R,P,C,T) otherwise print undefined
 =end
 
  if whatlist == "B" then
@@ -52,6 +61,9 @@ def listTodo (a,whatlist)
     elsif whatlist == "C" then
       puts "Complete"
       puts "--------"
+    elsif whatlist == "T" then
+      puts "Trash"
+      puts "-----"
     else
       puts "Undefined list"
       puts "--------------"
@@ -67,8 +79,8 @@ end
 
 def saveit (a)
 =begin
-  @pre 		: todo array, backup existing file before truncate?
-  @post 	: todos saved to file, seperator '|', a[0..3][0]=B,R,P,C 
+  @pre 		: todo array
+  @post 	: backup existing file before truncate? todos saved to file, seperator '|', a[0..3][0]=B,R,P,C 
 =end
 
  i = 0
@@ -160,5 +172,8 @@ case param
     putBackTodo(a,"P", opt)
   when '-complete'
     opt = ARGV.shift.to_i
-    putBackTodo(a,"C", opt)
+    putBackTodo(a,"C", opt)  
+  when 'trash'
+    opt = ARGV.shift.to_i
+    putBackTodo(a,"B", opt)
 end
