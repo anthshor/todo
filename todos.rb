@@ -1,4 +1,15 @@
 #!/usr/bin/ruby
+
+=begin
+
+  @requirements		: Todo list program that 
+			:   - adds todos 
+			:   - moves todo items between 'backlog', 'ready', 'in progress', 'complete' 
+			:   - save todo list to a file
+  @guaranteed outcome   : command line program to meet requirements
+
+=end
+
 a = []
 i = 0
 
@@ -22,10 +33,14 @@ File.open("todos.txt", "r").each_line do |line|
   i = i + 1
 end
 
-# list
-
 def listTodo (a,whatlist)
-  if whatlist == "B" then
+=begin
+  @pre 		: todo array, list identifier
+  @post 	: print selected list
+  @invariants 	: list idenitifier in (B,R,P,C) otherwise print undefined
+=end
+
+ if whatlist == "B" then
       puts "Backlog"
       puts "-------"
     elsif whatlist == "R" then
@@ -51,8 +66,12 @@ def listTodo (a,whatlist)
 end
 
 def saveit (a)
-  i = 0
-  # Backup file before truncate?
+=begin
+  @pre 		: todo array, backup existing file before truncate?
+  @post 	: todos saved to file, seperator '|', a[0..3][0]=B,R,P,C 
+=end
+
+ i = 0
   f = File.open("todos.txt", "w")
   for i in 0..a.length - 1 do
     for x in 0..a[i].length - 1 do
@@ -66,6 +85,11 @@ def saveit (a)
 end
 
 # add todo
+=begin
+  @pre		: current todo array, new item to add
+  @post		: new todo added to array saved to file
+=end
+
 def addTodo (a, item)
   for i in 0..a.length - 1 do
     if a[i][0] == "B" then y = i end
@@ -76,6 +100,12 @@ def addTodo (a, item)
 end
 
 def progressTodo(a,whichList, whichTodo)
+=begin
+  @pre		: current todo array, list identifier, index of todo item
+  @post		: todo moved to next list B -> R -> P -> C and saved to file
+  @invariants	: list identifier in (B,R,P,C)
+=end
+
   for i in 0..a.length - 1 do
     if a[i][0] == whichList then y = i end
   end
@@ -87,7 +117,13 @@ def progressTodo(a,whichList, whichTodo)
 end  
 
 def putBackTodo(a,whichList, whichTodo)
-  for i in 0..a.length - 1 do
+=begin
+  @pre		: current todo array, list identifier, index of todo item
+  @post		: todo moved back list B <- R <- P <- C and saved to file
+  @invariants	: list identifier in (B,R,P,C)
+=end
+
+ for i in 0..a.length - 1 do
     if a[i][0] == whichList then y = i end
   end
   unless a[y][whichTodo].nil? then
@@ -96,9 +132,7 @@ def putBackTodo(a,whichList, whichTodo)
     saveit(a)
   end
 end  
-#addTodo(a,"Eat cake")
-#moveTodo
-#listTodo(a,"B")
+
 
 param = ARGV.shift
 
