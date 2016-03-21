@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+require 'test/unit'
+
 =begin
 
   @requirements		: Todo list program that 
@@ -154,7 +156,9 @@ case param
     listTodo(a,opt)
   when 'add'
     item = ARGV.shift
-    addTodo(a, item)
+    unless item.nil? 
+      addTodo(a, item)
+    end
   when 'ready'
     opt = ARGV.shift.to_i
     progressTodo(a,"B", opt)

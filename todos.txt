@@ -1,4 +1,5 @@
-B|Goto Bank|Watch TV|Learn Ruby|
+T|
+B|Watch TV|Learn Ruby|Goto gym|
 R|
 P|
 C|
