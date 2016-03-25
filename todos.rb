@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
 
-require 'test/unit'
-
 =begin
 
   @requirements		: Todo list program that 
@@ -98,14 +96,13 @@ def saveit (a)
   f.close()
 end
 
-# add todo
+def addTodo (a, item)
 =begin
   @pre		: current todo array, new item to add
   @post		: new todo added to array saved to file
 =end
 
-def addTodo (a, item)
-  for i in 0..a.length - 1 do
+ for i in 0..a.length - 1 do
     if a[i][0] == "B" then y = i end
   end
   a[y].push(item)
@@ -113,40 +110,24 @@ def addTodo (a, item)
   saveit(a)
 end
 
-def progressTodo(a,whichList, whichTodo)
+def moveTodo (a, whichList, whichTodo, direction)
 =begin
-  @pre		: current todo array, list identifier, index of todo item
-  @post		: todo moved to next list B -> R -> P -> C and saved to file
-  @invariants	: list identifier in (B,R,P,C)
+  @pre		: current todo array, list identifier, index of todo item, direction
+  @post		: move todo forward or back list B <-> R <-> P <-> C and save to file
+  @invariants	: list identifier in (B,R,P,C, -1 - back, +1 - forward))
 =end
 
-  for i in 0..a.length - 1 do
-    if a[i][0] == whichList then y = i end
-  end
-  unless a[y][whichTodo].nil? then
-    a[y+1].push(a[y][whichTodo])
-    a[y].delete_at(whichTodo)
-    saveit(a)
-  end
-end  
-
-def putBackTodo(a,whichList, whichTodo)
-=begin
-  @pre		: current todo array, list identifier, index of todo item
-  @post		: todo moved back list B <- R <- P <- C and saved to file
-  @invariants	: list identifier in (B,R,P,C)
-=end
-
- for i in 0..a.length - 1 do
-    if a[i][0] == whichList then y = i end
-  end
-  unless a[y][whichTodo].nil? then
-    a[y-1].push(a[y][whichTodo])
-    a[y].delete_at(whichTodo)
-    saveit(a)
+  if direction == 1 || direction == -1 then
+    for i in 0..a.length - 1 do
+      if a[i][0] == whichList then y = i end
+    end
+    unless a[y][whichTodo].nil? then
+      a[y+direction].push(a[y][whichTodo])
+      a[y].delete_at(whichTodo)
+      saveit(a)
+    end
   end
 end  
-
 
 param = ARGV.shift
 
@@ -161,23 +142,23 @@ case param
     end
   when 'ready'
     opt = ARGV.shift.to_i
-    progressTodo(a,"B", opt)
+    moveTodo(a,"B", opt, 1)
   when 'progress'
     opt = ARGV.shift.to_i
-    progressTodo(a,"R", opt)
+    moveTodo(a,"R", opt, 1)
   when 'complete'
     opt = ARGV.shift.to_i
-    progressTodo(a,"P", opt)
+    moveTodo(a,"P", opt, 1)
   when '-ready'
     opt = ARGV.shift.to_i
-    putBackTodo(a,"R", opt)
+    moveTodo(a,"R", opt, -1)
   when '-progress'
     opt = ARGV.shift.to_i
-    putBackTodo(a,"P", opt)
+    moveTodo(a,"P", opt, -1)
   when '-complete'
     opt = ARGV.shift.to_i
-    putBackTodo(a,"C", opt)  
+    moveTodo(a,"C", opt, -1)
   when 'trash'
     opt = ARGV.shift.to_i
-    putBackTodo(a,"B", opt)
+    moveTodo(a,"B", opt, -1)
 end
